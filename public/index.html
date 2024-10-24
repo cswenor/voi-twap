@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VOI TWAP</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 50px;
+    }
+    h1 {
+      color: #333;
+    }
+    .twap-container {
+      display: inline-block;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+  <h1>VOI TWAP (Time-Weighted Average Price)</h1>
+  <div class="twap-container">
+    <p><strong>7-day TWAP:</strong> <span id="sevenDayTWAP">Loading...</span></p>
+    <p><strong>30-day TWAP:</strong> <span id="thirtyDayTWAP">Loading...</span></p>
+  </div>
+
+  <script>
+    async function fetchTWAP() {
+      try {
+        const response = await fetch('/api/twap');
+        const data = await response.json();
+        document.getElementById('sevenDayTWAP').textContent = data.sevenDayTWAP.toFixed(6) + ' USD';
+        document.getElementById('thirtyDayTWAP').textContent = data.thirtyDayTWAP.toFixed(6) + ' USD';
+      } catch (error) {
+        console.error('Error fetching TWAP data:', error);
+      }
+    }
+
+    // Fetch TWAP data on page load
+    fetchTWAP();
+  </script>
+</body>
+</html>
